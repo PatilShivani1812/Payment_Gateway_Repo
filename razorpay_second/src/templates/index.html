@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-6 mx-auto">
+    <div class="text-center mt-2">
+       <img src="https://img.freepik.com/premium-vector/coffee-vector_25327-18.jpg" class="img-fluid img-responsive" style="height: 200px; width: 250px;">
+    </div>
+    <form method="post">
+      {% csrf_token %}
+        <div class="form-group">
+          <label for="exampleInputEmail1">Enter Name</label>
+          <input type="name" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Enter Amount </label>
+          <input type="number" name="amount" class="form-control" id="exampleInputPassword1" placeholder="Amount">
+        </div>
+        <button type="submit" class="btn btn-success">Pay Now</button>
+    </form>
+    
+</div>
+{% if payment %}
+<div class="text-center mx-auto">
+<form action="/success/"method="POST">
+  <script
+  src="https://checkout.razorpay.com/v1/checkout.js"
+  data-key="rzp_test_X7OC0JpEHI7vrV"// Enter the key ID generated from the Dashboard
+  data-amount = "{{payment.amount}}"//amount is in currency subunits.Default currency is INR,Hence 5000 repay
+  data-currency="INR"
+  data-order_id="{{payment.id}}"
+  data-buttontext="Pay with Razorpay"
+  data-name="Coffee Corp"
+  data-description="Test transaction"
+  data-image="https://example.com/your_logo.jpg"
+  data-prefill.name = "Gaurav kumar"
+  data-prefill.email="gaurav.kumar@example.com"
+  data-prefill.contact="9999999999"
+  data-theme.color="#F37254"
+  ></script>
+  <input type="hidden" custom="Show Element " name="hidden">
+</form>
+{% endif %}
+</div>
+{% endblock %}
